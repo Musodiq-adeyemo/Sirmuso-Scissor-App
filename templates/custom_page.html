@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Customied url Page
+{% endblock %}
+
+{% block body %} 
+    <div style="margin-left: 150px;" class="bar-container1">
+        <h1 style="color: navy;"> Customized URL Page</h1>
+        <h3 style="color: blue;text-align: center;">Customized your Short URL here</h3>
+    </div>
+
+    <div style="display: flex;justify-content: center;">
+        <div class="col-xl-8">
+          <!-- Home  Page card-->
+          <br>
+          <div class="card mb-4" style="margin-left: 20px;">
+            <h4 style="color: red;text-align: center;font-weight: bold;">{{errors}}</h4>
+            <div class="card-header" style="color: navy;font-weight: bold;font-size: 30px;text-align: center;border-bottom: 5px solid lightgray;">Customized Your URL</div>
+              <div class="card-body">
+                <form action="/customurl_page" method ='POST'>
+                    <!-- Form Group (custom_domain)-->
+                    <div class="form-group">
+                      <label style="color: red;font-weight: bold;" for="custom">INPUT YOUR CUSTOM DOMAIN:</label>
+                      <input type="text" class="form-control" id="custom_domain" name="custom_domain"  aria-describedby="Enter Custom Domain" placeholder="Enter Custom Domain">
+                    </div>
+                    <!-- Form Group (short url)-->
+                    <div class="form-group">
+                      <label style="color: red;font-weight: bold;" for="short">INPUT YOUR SHORT URL:</label>
+                      <input type="text" class="form-control" id="short_url" name="short_url"  aria-describedby="Enter Short URL" placeholder="Enter Short URL">
+                    </div>
+                    <center>
+                        <button style="background: green;" class="btn btn-primary" type="submit">Customized URL</button>
+                    </center>
+                    <br>
+                  </div>
+                </form>
+              </div>
+            </div> 
+          </div>
+        </div>
+        {% for url in urls %}
+        {% if url.url_key == url_key %}
+        <div class="col-xl-8">
+          <div class="card mb-4" style="margin-left: 20px;">
+            <div class="card-header" style="color: navy;font-weight: bold;font-size: 30px;text-align: center;border-bottom: 5px solid lightgray;">Customized URL</div>
+            <div class="card-body">
+              <h3 style="color: blue;padding: 10px;"><span style="color: red;">Customized Url : </span>{{url.custom_url}}</h3>
+              <br>
+              <center>
+                <a href={{url.custom_url}}><button style="font-weight: bolder;background: green;" class="btn btn-primary" type="submit">Load Custom URL</button></a>
+                <a href="/qrcode/url"><button style="font-weight: bolder;background: blue;" class="btn btn-primary" type="submit">Get QR Code</button></a>
+              </center>
+            </div>
+          </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

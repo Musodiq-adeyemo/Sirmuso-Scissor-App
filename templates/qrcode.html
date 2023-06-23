@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    QRCODE Page
+{% endblock %}
+
+{% block body %} 
+    <div style="margin-left: 150px;" class="bar-container1">
+        <br>
+        <h1 style="color: navy;"> QRCode Page</h1>
+    </div>
+
+    <div style="display: flex;justify-content: center;">
+        <div class="col-xl-8">
+          <!-- QRCode  Page card-->
+          <br>
+          <div class="card mb-4" style="margin-left: 20px;">
+            <h4 style="color: red;text-align: center;font-weight: bold;">{{errors}}</h4>
+            <div class="card-header" style="color: navy;font-weight: bold;font-size: 30px;text-align: center;border-bottom: 5px solid lightgray;">Generate QRCode for URL</div>
+              <div class="card-body">
+                <form action="/qrcode/url" method="post">
+                    <div class="form-group">
+                        <label style="color: red;font-weight: bold;" for="url">INPUT YOUR URL:</label>
+                        <input type="text" class="form-control" id="url" name="url"  placeholder="{{url}}"
+                        value="{{url}}">
+                    </div>
+                    <br>
+                    <center>
+                        <button style="background: green;" class="btn btn-primary" type="submit">Generate QR Code</button>
+                    </center>
+                </form>
+                <br>
+                <br>
+                
+                    <div class="column is-one-quarter">
+                        <!-- qr code -->
+                        {% if qr_data %}
+                        <center>
+                            <img style="height: 180px;width: 180px;" src="data:image/png;base64,{{qr_data}}" alt="qr code for {{url}}"
+                             class="animate__animated animate__zoomIn">
+                        </center>
+                        {% else %}
+                        <img style="height: 150px;width:150px;background-color: blue;" src="/static/qr-placeholder.png" alt="qr code for {{url}}">
+                        {% endif %}
+                    </div>
+                
+              </div>
+            </div> 
+          </div>
+        </div>
+        
+    </div>
+
+{% endblock %}

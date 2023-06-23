@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    HOME Page
+{% endblock %}
+
+{% block body %} 
+    <div style="margin-left: 150px;" class="bar-container1">
+        <h1 style="color: navy;"> Home Page</h1>
+        <h3 style="color: blue;text-align: center;">Hey <span style="color: red;">{{current_user}}</span> Welcome to Our Home Page</h3>
+    </div>
+
+    <div style="display: flex;justify-content: center;">
+        <div class="col-xl-8">
+          <!-- Home  Page card-->
+          <br>
+          <div class="card mb-4" style="margin-left: 20px;">
+            <h4 style="color: red;text-align: center;font-weight: bold;">{{errors}}</h4>
+            <div class="card-header" style="color: navy;font-weight: bold;font-size: 30px;text-align: center;border-bottom: 5px solid lightgray;">Shorten Your Long URL</div>
+              <div class="card-body">
+                <form action="/home" method ='POST'>
+                    <!-- Form Group (long url)-->
+                    <div class="form-group">
+                      <label style="color: red;font-weight: bold;" for="original">INPUT YOUR LONG URL:</label>
+                      <input type="text" class="form-control" id="original_url" name="original_url"  aria-describedby="Enter Long Url" placeholder="Enter Long Url">
+                    </div>
+                    <!-- Form Group (user id)-->
+                    <div class="col-md-6">
+                      <label style="color: red;font-weight: bold;" class="small mb-1" for="dob">User ID</label>
+                      <input class="form-control" id="user_id"name="user_id" type="number" placeholder="Input your user Id" >
+                  </div>
+                  <br>
+                    <center>
+                        <button style="background: green;" class="btn btn-primary" type="submit">Shorten URL</button>
+                    </center>
+                    <br>
+                  </div>
+                </form>
+              </div>
+            </div> 
+          </div>
+        </div>
+        {% for url in urls %}
+        {% if url.user_id == user_id %}
+        <div class="col-xl-8">
+          <div class="card mb-4" style="margin-left: 20px;">
+            <div class="card-header" style="color: navy;font-weight: bold;font-size: 30px;text-align: center;border-bottom: 5px solid lightgray;">Shortened URL</div>
+            <div class="card-body">
+              <h3 style="color: blue;padding: 10px;"><span style="color: red;">Short Url : </span>{{url.short_url}} {{original}}</h3>
+              <br>
+              <center>
+                <a href={{url.short_url}}><button style="font-weight: bolder;background: green;" class="btn btn-primary" type="submit">Load Short URL</button></a>
+                <a href="/customurl/{{url.id}}"><button style="font-weight: bolder;background: blue;" class="btn btn-primary" type="submit">Customized URL</button></a>
+              </center>
+            </div>
+          </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

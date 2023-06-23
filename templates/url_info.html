@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    URL Info Page
+{% endblock %}
+
+{% block body %} 
+    <div style="margin-left: 150px;" class="bar-container1">
+      <br>
+        <h1 style="color: navy;"> URL INFORMATION</h1> 
+    </div>
+    <br>
+    <div>
+        <div style="display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto;">
+          <div class="card"style="width: auto;border-radius: 25px;">
+            <div class="card-header" style="color: navy;font-weight: bold;font-size: 30px;text-align: center;border-bottom: 5px solid lightgray;">
+              <h1 style="font-size: 30px;">ABOUT URL</h1>
+            </div>
+            <div class="card-body">
+                <div class="student">
+                    <h2 style="font-size: 22px;font-weight: bold;">ID : <span style="padding-left: 200px;">{{url.id}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">Original URL : <span style="padding-left: 60px;">{{url.original_url}} </span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">Short URL : <span style="padding-left: 85px;">{{url.short_url}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">Custom URL : <span style="padding-left: 60px;">{{url.custom_url}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">Custom Domain : <span style="padding-left: 30px;">{{url.custom_domain}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">Clicks : <span style="padding-left: 160px;">{{url.clicks}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">Date : <span style="padding-left: 160px;">{{url.timestamp.strftime('%d-%m-%y')}}</span></h2>
+                </div>
+                  <hr>
+            </div>
+          </div>
+          
+          <div class="card"style="width: auto;border-radius: 25px;">
+            <div class="card-header" style="color: navy;font-weight: bold;font-size: 20px;text-align: center;border-bottom: 5px solid lightgray;">
+              <h1 style="font-size: 30px;">ABOUT OWNER</h1>
+            </div>
+            <div class="card-body">
+                {% for user  in users %}
+                {% for name  in names %}
+                {% if user.id == url.user_id %}
+                {% if name.user_id == url.user_id %}
+                <div class="student">
+                    <h2 style="font-size: 22px;font-weight: bold;">USERNAME : <span style="padding-left: 50px;">{{user.username}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;"> SURNAME : <span style="padding-left: 70px;">{{name.lastname}} </span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">FIRSTNAME : <span style="padding-left: 50px;">{{name.firstname}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">USER ID : <span style="padding-left: 130px;">{{user.id}}</span></h2>
+                    <h2 style="font-size: 22px;font-weight: bold;">EMAIL : <span style="padding-left: 100px;">{{user.email}}</span></h2>
+                </div>  
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                {% endfor %}  
+            </div>
+          </div>
+        </div>    
+    </div>
+{% endblock %}
