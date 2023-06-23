@@ -48,9 +48,11 @@ def update_url_clicks(custom_url:str,db:Session):
 
 # forwarding the Custom URL to the original URL
 def custom_to_orginal_url(custom_url:str,db:Session):
-    if db_url := get_url_by_custom_url(custom_url=custom_url,db=db):
-        # update the url click by increasing it by +1
-        update_url_clicks(custom_url=custom_url,db=db)
+    db_url = db.query(URL).filter(URL.custom_url==custom_url,URL.is_active).first()
+    if db_url :
+        db_url.clicks = +1
+        db.commit()
+        
         return RedirectResponse(db_url.original_url)
     else:
         not_found(message=f"URL:{custom_url} doesn't exist")
