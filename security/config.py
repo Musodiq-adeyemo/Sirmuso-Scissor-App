@@ -9,7 +9,7 @@ class ConfigSettings(BaseSettings):
     class config:
         env_file = ".env"
 
-@lru_cache
+@lru_cache(maxsize=16)
 def base_settings() -> ConfigSettings:
     settings = ConfigSettings()
     print(f"Loading settings for:{settings.env_name}")
