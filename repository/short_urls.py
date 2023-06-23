@@ -99,9 +99,11 @@ def update_url_clicks(id:int,db:Session):
         
 # forwarding the short URL to the original URL
 def forward_to_orginal_url(short_url:str,db:Session):
-    if db_url := get_url_by_short_url(short_url=short_url,db=db):
-        # update the url click by increasing it by +1
-        update_url_clicks(short_url=short_url,db=db)
+    db_url = db.query(URL).filter(URL.short_url==short_url,URL.is_active).first()
+    if db_url :
+        db_url.clicks = +1
+        db.commit()
+        
         return RedirectResponse(db_url.original_url)
     else:
         not_found(message=f"URL:{short_url} doesn't exist")
