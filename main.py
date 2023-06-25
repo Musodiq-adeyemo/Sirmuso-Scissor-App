@@ -1,3 +1,4 @@
+import uvicorn
 import validators
 import pyqrcode
 from fastapi import FastAPI,Request,Depends,HTTPException,Form,status,UploadFile,File
@@ -522,3 +523,6 @@ def logout(Authorize:AuthJWT=Depends()):
     
     redirect_url = "/"
     return RedirectResponse(redirect_url,status_code=status.HTTP_303_SEE_OTHER)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1",port=8000,reload= True)
