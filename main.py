@@ -89,7 +89,7 @@ def home(request: Request,original_url:str=Form(...),user_id:int=Form(...),Autho
         # Generating URL key
         url_key = create_unique_key(db)
         # Base environment URL
-        base_url = base_settings().base_url
+        base_url = "http://"
         # creating short URL
         short_url = str(base_url  + url_key)
         # saving URL into the database
@@ -353,7 +353,7 @@ def custom_url(request: Request,short_url:str=Form(...),custom_domain:str=Form(.
     # Retrieve the short URL details from db and create a customize URL
     url = db.query(URL).filter(URL.short_url == short_url,URL.is_active).first()
     url_key = url.url_key
-    base_url = "http://127.0.0.1:8000/"
+    base_url = "http://"
     if url:
         url.custom_domain = custom_domain
         url.custom_url = str(base_url + custom_domain)
@@ -376,7 +376,7 @@ def custom_page_display(request: Request,url_key:str,db:Session = Depends(get_db
     return templates.TemplateResponse("custom_page.html",{"request":request,"url_key":url_key,"urls":urls})
 
 # Loading short URL
-@app.get("/{url_key}",response_class=HTMLResponse,tags=["Template"])
+@app.get(f"http://{url_key}",response_class=HTMLResponse,tags=["Template"])
 def short_to_target(request: Request,url_key:str,db:Session = Depends(get_db),Authorize:AuthJWT=Depends()):
 
     # Get original  url using short url
